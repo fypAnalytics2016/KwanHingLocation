@@ -1,0 +1,60 @@
+<!DOCTYPE HTML> 
+<html> 
+	<head> 
+		<meta charset="utf-8"/>  
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"> 
+		<meta name="description" content="LocationBasedServices"/> 
+		<title>IoT Based Sports Management System</title>
+		<h1 id="name"><br><br>Detecting Your Location</br></br></h1>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/> 
+		<script> 
+		var watchId; 
+			function success(position) { 
+				document.getElementById("locationInfo").innerHTML = "Latitude: " +   
+				position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+				navigator.geolocation.clearWatch(watchId);
+			}
+			function error(error) { 
+				var errorInfo = document.getElementById("locationInfo"); 
+				switch (error.code) { 
+					case error.PERMISSION_DENIED:
+						 errorInfo.innerHTML = "Permission denied. <br>User denied the request for Geolocation.";
+					     break; 
+					case error.POSITION_UNAVAILABLE: 
+						 errorInfo.innerHTML = "Location information is unavailable. Please make sure GPS is turned on. "; 
+						 break; 
+					case error.TIMEOUT: 
+						 errorInfo.innerHTML = "Request timed out."; 
+						 break; 
+					case error.UNKNOWN_ERROR: 
+						 errorInfo.innerHTML = "Unknown error, please contact your administrator."; 
+						 break; 
+				}
+			}
+
+			function watchFunc() { 	  <!--watch yr position--> 
+				if (navigator.geolocation) { 
+					watchId = navigator.geolocation.watchPosition(success, error,
+						{ 
+							enableHighAccuracy: true,
+							maximumAge: Infinity 
+						}
+
+						); 
+					
+				}
+				else { 
+					document.getElementById("locationInfo").innerHTML="Geolocation is not supported."; 
+				}
+			}
+		</script> 	
+	</head> 
+	<body> 
+			<p><b>Your Location Information:</b>
+			<br><span id="locationInfo">Click the button <b>Search Me</b>. <br>This might take less than 2 minutes. Thank You.</br></span>
+			</p> 
+			<input type="button" id="watchPos" value="Search Me" onclick="watchFunc()" style="width: 40%"> 
+	
+	</body> 
+</html> 
+			
